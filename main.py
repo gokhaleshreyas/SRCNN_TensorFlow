@@ -1,0 +1,42 @@
+import srcnn
+import tensorflow as tf
+import argparse
+
+train_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\train'
+test_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\test\\Set5'
+validation_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\test\\Set5'
+model_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\model'
+result_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\result'
+
+args = argparse.ArgumentParser()
+args.add_argument('--do_train', type=bool, default=False)
+args.add_argument('--do_test', type=bool, default=False)
+args.add_argument('--train_dir', type=str, default=train_dir)
+args.add_argument('--valid_dir', type=str, default=validation_dir)
+args.add_argument('--test_dir', type=str, default=test_dir)
+args.add_argument('--model_dir', type=str, default=model_dir)
+args.add_argument('--result_dir', type=str, default=result_dir)
+args.add_argument('--scale', type=int, default=3)
+args.add_argument('--learning_rate', type=float, default=1e-4)
+args.add_argument('--epochs', type=int, default=1000)
+args.add_argument('--n_channels', type=int, default=1)
+args.add_argument('--batch_size', type=int, default=128)
+args.add_argument('--momentum', type=float, default=0.9)
+args.add_argument('--colour_format', type=str, default='ych')
+args.add_argument('--network_filters', type=str, default='9-1-5')
+args.add_argument('--prepare_data', type=str, default='matlab')
+
+
+def main(args):
+    with tf.Session() as sess:
+        net = srcnn.SRCNN(args, sess)
+        if args.do_train:
+            net.train()
+        elif args.do_test:
+            net.test()
+        else:
+            print("Invalid value for --do_train or --do_test")
+
+
+if __name__ == '__main__':
+    main(args=args.parse_args())
