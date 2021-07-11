@@ -2,11 +2,11 @@ import srcnn
 import tensorflow as tf
 import argparse
 
-train_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\train'
-test_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\test\\Set5'
-validation_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\test\\Set5'
-model_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\model'
-result_dir = 'C:\\Shreyas\\Programming\\Python\\Neural_Networks\\SRCNN\\SRCNN_TensorFlow\\result'
+train_dir = '/train/'
+test_dir = '/test/Set5'
+validation_dir = '/test/Set5'
+model_dir = '/model/'
+result_dir = '/result/'
 
 args = argparse.ArgumentParser()
 args.add_argument('--do_train', type=bool, default=False)
