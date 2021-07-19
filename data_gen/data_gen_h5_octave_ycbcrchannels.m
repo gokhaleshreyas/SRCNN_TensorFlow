@@ -10,13 +10,14 @@ scale = 3;
 stride = 14;
 
 dataset='91';
-dataset_path = 'C:\Shreyas\Programming\Python\Neural_Networks\Data\Dataset\';
+dataset_path = '/Dataset/';
 data_path = strcat(dataset_path, dataset);
 
-save_data = 'train_91_ycbcrchannels_octave_v2.h5';
-save_dataset_path_1 = 'C:\Shreyas\Programming\Python\Neural_Networks\SRCNN\Data';
-save_dataset_path_2 = '\RGB2YCBCR_OCTAVE\';
-save_dataset_path = strcat(save_dataset_path_1, save_dataset_path_2);
+save_data = 'train_91_rgbchannels_octave.h5';
+% save_dataset_path_1 = '/train';
+% save_dataset_path_2 = '/MATLAB/';
+% save_dataset_path = strcat(save_dataset_path_1, save_dataset_path_2);
+save_dataset_path = '../train/';
 save_path = strcat(save_dataset_path, save_data);
 if ~exist(save_dataset_path)
     mkdir(save_dataset_path);
