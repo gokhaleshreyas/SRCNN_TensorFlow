@@ -66,7 +66,7 @@ The arguments are: \
 ## Work To  Be done
 
 1. There are some issues regarding the '9-3-5' and '9-5-5' filters when cross validating and testing the results of the trained network.
-2. For 'rgb' channels, the PSNR goes upto 14 dB and then drops down eventually (For the default and some changed values of hyperparameters). That thing needs to be fixed.
+2. For 'rgb' channels, the PSNR goes upto 14 dB and then drops down eventually (For the default and some changed values of hyperparameters). That is to be rectified.
 
 ## References
 
