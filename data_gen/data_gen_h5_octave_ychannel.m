@@ -2,7 +2,7 @@ clc;
 clear all;
 close all;
 
-% pkg load image
+pkg load image
 
 image_size = 33;
 label_size = 21;
