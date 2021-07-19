@@ -13,7 +13,7 @@ data_path = strcat(dataset_path, dataset);
 
 save_data = 'train_91_rgbchannels_matlab.h5';
 save_dataset_path_1 = '/train';
-save_dataset_path_2 = '/RGB2YCBCR_MATLAB/';
+save_dataset_path_2 = '/MATLAB/';
 save_dataset_path = strcat(save_dataset_path_1, save_dataset_path_2);
 save_path = strcat(save_dataset_path, save_data);
 if ~exist(save_dataset_path)
