@@ -1,5 +1,4 @@
 % load image package which is necessary for image processing functions
-
 pkg load image 
 
 clc;
