@@ -10,10 +10,10 @@ path = strcat(base_path, folder);
 
 base_path = '/test/';
 
-base_savepath_gt = '/RGB2YCBCR_MATLAB\91_gt_mat_rgb';
-base_savepath_2x = '/RGB2YCBCR_MATLAB\91_2x_mat_rgb';
-base_savepath_3x = '/RGB2YCBCR_MATLAB\91_3x_mat_rgb';
-base_savepath_4x = '/RGB2YCBCR_MATLAB\91_4x_mat_rgb';
+base_savepath_gt = '/RGB2YCBCR_MATLAB/91_gt_mat_rgb';
+base_savepath_2x = '/RGB2YCBCR_MATLAB/91_2x_mat_rgb';
+base_savepath_3x = '/RGB2YCBCR_MATLAB/91_3x_mat_rgb';
+base_savepath_4x = '/RGB2YCBCR_MATLAB/91_4x_mat_rgb';
 
 savepath_gt = strcat(base_path, base_savepath_gt);
 savepath_2x = strcat(base_path, base_savepath_2x);
@@ -25,9 +25,9 @@ mkdir(savepath_2x);
 mkdir(savepath_3x);
 mkdir(savepath_4x);
 
-base_savepath_2x_upscaled = '/RGB2YCBCR_MATLAB\91_2x_upscaled_mat_rgb';
-base_savepath_3x_upscaled = '/RGB2YCBCR_MATLAB\91_3x_upscaled_mat_rgb';
-base_savepath_4x_upscaled = '/RGB2YCBCR_MATLAB\91_4x_upscaled_mat_rgb';
+base_savepath_2x_upscaled = '/RGB2YCBCR_MATLAB/91_2x_upscaled_mat_rgb';
+base_savepath_3x_upscaled = '/RGB2YCBCR_MATLAB/91_3x_upscaled_mat_rgb';
+base_savepath_4x_upscaled = '/RGB2YCBCR_MATLAB/91_4x_upscaled_mat_rgb';
 
 savepath_2x_upscaled = strcat(base_path, base_savepath_2x_upscaled);
 savepath_3x_upscaled = strcat(base_path, base_savepath_3x_upscaled);
