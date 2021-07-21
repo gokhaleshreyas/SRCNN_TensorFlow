@@ -86,15 +86,15 @@ class SRCNN:
     def model(self):
         conv1 = tf.nn.conv2d(input=self.X, filters=self.weights['w1'], strides=[1, 1, 1, 1],
                              padding='VALID')
-        conv1 = tf.add(conv1, self.biases['b1'])
+        conv1 = tf.nn.bias_add(conv1, self.biases['b1'])
         activ1 = tf.nn.relu(conv1)
         conv2 = tf.nn.conv2d(input=activ1, filters=self.weights['w2'], strides=[1, 1, 1, 1],
                              padding='VALID')
-        conv2 = tf.add(conv2, self.biases['b2'])
+        conv2 = tf.nn.bias_add(conv2, self.biases['b2'])
         activ2 = tf.nn.relu(conv2)
         conv3 = tf.nn.conv2d(input=activ2, filters=self.weights['w3'], strides=[1, 1, 1, 1],
                              padding='VALID')
-        conv3 = tf.add(conv3, self.biases['b3'])
+        conv3 = tf.nn.bias_add(conv3, self.biases['b3'])
         return conv3
 
     def train(self):
@@ -107,6 +107,8 @@ class SRCNN:
             train_X, train_y = load_octave_data(self.train_dir, self.colour_format)
             valid_X_bc, valid_y_bc = make_octave_bc_data(self.valid_dir, self.scale, self.colour_format)
             valid_y_gt = make_octave_gt_data(self.valid_dir, self.colour_format)
+        else:
+            print("Invalid arguments for prepare_data")
         start_time = time.time()
         init = tf.global_variables_initializer()
         self.sess.run(init)
@@ -196,10 +198,10 @@ class SRCNN:
                 test_y_bc_ych = border_crop(test_y_bc_ych[0])
                 test_y_gt_ych = border_crop(test_y_gt_ych[0])
                 results = results[0]
-                gt = test_y_gt
-                bc = test_y_bc
+                gt = test_y_gt[i]
+                bc = test_y_bc[i]
                 srcnn = np.concatenate((results, test_y_bc_cbcr), axis=2)
-                save_res(gt, bc, srcnn, i)
+                save_res(gt, bc, srcnn, i, self.colour_format)
                 bicubic_psnr.append(psnr(test_y_bc_ych, test_y_gt_ych))
                 test_psnr.append(psnr(results, test_y_gt_ych))
             elif self.n_channels == 3:
@@ -213,10 +215,10 @@ class SRCNN:
                 test_y_bc_ = border_crop(test_y_bc_[0])
                 test_y_gt_ = border_crop(test_y_gt_[0])
                 results = results[0]
-                gt = test_y_gt
-                bc = test_y_bc
+                gt = test_y_gt[i]
+                bc = test_y_bc[i]
                 srcnn = results
-                save_res(gt, bc, srcnn, i)
+                save_res(self.result_dir, gt, bc, srcnn, i, self.colour_format)
 
                 bicubic_psnr.append(psnr(test_y_bc_, test_y_gt_))
                 test_psnr.append(psnr(results, test_y_gt_))
@@ -258,11 +260,11 @@ def psnr(x, y):
 
 def load_matlab_data(train_dir, colour_format):
     if colour_format == 'ych':
-        train_dir = train_dir + '/train_91_ychannels_matlab.h5'
+        train_dir = train_dir + '\\train_91_ychannels_matlab.h5'
     elif colour_format == 'ycbcr':
-        train_dir = train_dir + '/train_91_ycbcrchannels_matlab.h5'
+        train_dir = train_dir + '\\train_91_ycbcrchannels_matlab.h5'
     elif colour_format == 'rgb':
-        train_dir = train_dir + '/train_91_rgbchannels_matlab.h5'
+        train_dir = train_dir + '\\train_91_rgbchannels_matlab.h5'
     with h5py.File(train_dir, 'r') as f:
         x = np.array(f.get('data'))
         y = np.array(f.get('label'))
@@ -271,11 +273,11 @@ def load_matlab_data(train_dir, colour_format):
 
 def load_octave_data(train_dir, colour_format):
     if colour_format == 'ych':
-        train_dir = train_dir + '/train_91_ychannels_octave.h5'
+        train_dir = train_dir + '\\train_91_ychannels_octave.h5'
     elif colour_format == 'ycbcr':
-        train_dir = train_dir + '/train_91_ycbcrchannels_octave.h5'
+        train_dir = train_dir + '\\train_91_ycbcrchannels_octave.h5'
     elif colour_format == 'rgb':
-        train_dir = train_dir + '/train_91_rgbchannels_octave.h5'
+        train_dir = train_dir + '\\train_91_rgbchannels_octave.h5'
     with h5py.File(train_dir, 'r') as f:
         x = np.array(f.get('data').get('value'))
         y = np.array(f.get('label').get('value'))
@@ -392,17 +394,30 @@ def make_octave_gt_data(train_dir, colour_format):
     return y
 
 
-def imsave(img, path, filename):
+def imsave_ycbcr(img, path, filename):
     img = img * 255.
     img = Image.fromarray(img.astype('uint8'), mode='YCbCr')
     img = img.convert('RGB')
     return img.save(os.path.join(path, filename))
 
 
-def save_res(path, gt, bc, srcnn, i):
-    imsave(gt, path, str(i) + '_gt.bmp')
-    imsave(bc, path, str(i) + '_bc.bmp')
-    imsave(srcnn, path, str(i) + '_srcnn.bmp')
+def imsave_rgb(img, path, filename):
+    img = img * 255.
+    img = Image.fromarray(img.astype('uint8'), mode='RGB')
+    return img.save(os.path.join(path, filename))
+
+
+def save_res(path, gt, bc, srcnn, i, colour_format):
+    if colour_format == 'ych' or 'ycbcr':
+        imsave_ycbcr(gt, path, str(i) + '_gt.bmp')
+        imsave_ycbcr(bc, path, str(i) + '_bc.bmp')
+        imsave_ycbcr(srcnn, path, str(i) + '_srcnn.bmp')
+    elif colour_format == 'rgb':
+        imsave_rgb(gt, path, str(i) + '_gt.bmp')
+        imsave_rgb(bc, path, str(i) + '_bc.bmp')
+        imsave_rgb(srcnn, path, str(i) + '_srcnn.bmp')
+    else:
+        print("Improper value for colour_format")
 
 
 def border_crop(img):
