@@ -260,11 +260,11 @@ def psnr(x, y):
 
 def load_matlab_data(train_dir, colour_format):
     if colour_format == 'ych':
-        train_dir = train_dir + '\\train_91_ychannels_matlab.h5'
+        train_dir = train_dir + '/train_91_ychannels_matlab.h5'
     elif colour_format == 'ycbcr':
-        train_dir = train_dir + '\\train_91_ycbcrchannels_matlab.h5'
+        train_dir = train_dir + '/train_91_ycbcrchannels_matlab.h5'
     elif colour_format == 'rgb':
-        train_dir = train_dir + '\\train_91_rgbchannels_matlab.h5'
+        train_dir = train_dir + '/train_91_rgbchannels_matlab.h5'
     with h5py.File(train_dir, 'r') as f:
         x = np.array(f.get('data'))
         y = np.array(f.get('label'))
@@ -273,11 +273,11 @@ def load_matlab_data(train_dir, colour_format):
 
 def load_octave_data(train_dir, colour_format):
     if colour_format == 'ych':
-        train_dir = train_dir + '\\train_91_ychannels_octave.h5'
+        train_dir = train_dir + '/train_91_ychannels_octave.h5'
     elif colour_format == 'ycbcr':
-        train_dir = train_dir + '\\train_91_ycbcrchannels_octave.h5'
+        train_dir = train_dir + '/train_91_ycbcrchannels_octave.h5'
     elif colour_format == 'rgb':
-        train_dir = train_dir + '\\train_91_rgbchannels_octave.h5'
+        train_dir = train_dir + '/train_91_rgbchannels_octave.h5'
     with h5py.File(train_dir, 'r') as f:
         x = np.array(f.get('data').get('value'))
         y = np.array(f.get('label').get('value'))
