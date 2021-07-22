@@ -14,7 +14,9 @@ MATLAB or GNU Octave (For Data Preprocessing)
 
 ## Implementation Details
 
-In this implementation, the SRCNN network can be trained on both 1 channel and 3 channels. The data pre-processing can be done using either MATLAB or GNU Octave (The code is provided for the same).
+In this implementation, the SRCNN network can be trained on both 1 channel and 3 channels. The data pre-processing can be done using either MATLAB or GNU Octave (Link to files: https://github.com/gokhaleshreyas/Data_Generation_Files).
+
+Note: The data generation files for this specific section needs to be downloaded and kept in the 'data_gen' folder.
 
 ## Use
 
